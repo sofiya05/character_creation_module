@@ -2,6 +2,7 @@ from random import randint
 
 
 def attack(char_name: str, char_class: str) -> str:
+    """атака."""
     if char_class == 'warrior':
         return (f'{char_name} нанёс урон противнику равный'
                 f'{5 + randint(3, 5)}')
@@ -14,6 +15,7 @@ def attack(char_name: str, char_class: str) -> str:
 
 
 def defence(char_name: str, char_class: str) -> str:
+    """защита."""
     if char_class == 'warrior':
         return (f'{char_name} блокировал {10 + randint(5, 10)} урона')
     if char_class == 'mage':
@@ -23,6 +25,7 @@ def defence(char_name: str, char_class: str) -> str:
 
 
 def special(char_name: str, char_class: str) -> str:
+    """Умение."""
     if char_class == 'warrior':
         return (f'{char_name} применил специальное '
                 f'умение «Выносливость {80 + 25}»')
@@ -35,6 +38,7 @@ def special(char_name: str, char_class: str) -> str:
 
 
 def start_training(char_name: str, char_class: str) -> str:
+    """начало тренировки."""
     if char_class == 'warrior':
         print(f'{char_name}, ты Воитель — отличный боец ближнего боя.')
     if char_class == 'mage':
@@ -61,6 +65,7 @@ def start_training(char_name: str, char_class: str) -> str:
 
 
 def choice_char_class() -> str:
+    """выбор класса."""
     approve_choice: str = None
     char_class: str = None
     while approve_choice != 'y':
@@ -83,7 +88,17 @@ def choice_char_class() -> str:
     return char_class
 
 
-def main():
+def main() -> None:
+    """главный."""
+    print('Приветствую тебя, искатель приключений!')
+    print('Прежде чем начать игру...')
+    char_name: str = input('...назови себя: ')
+    print(f'Здравствуй, {char_name}! '
+          'Сейчас твоя выносливость — 80, атака — 5 и защита — 10.')
+    print('Ты можешь выбрать один из трёх путей силы:')
+    print('Воитель, Маг, Лекарь')
+    char_class: str = choice_char_class()
+    print(start_training(char_name, char_class))
     print('Приветствую тебя, искатель приключений!')
     print('Прежде чем начать игру...')
     char_name: str = input('...назови себя: ')
@@ -109,6 +124,7 @@ ANTIBONUS: float = 0.8
 def add_rep(current_rep: float,
             rep_points: float,
             buf_effect: float) -> float:
+    """добавить репутацию."""
     current_rep += rep_points
     if buf_effect:
         return current_rep * BONUS
@@ -118,6 +134,7 @@ def add_rep(current_rep: float,
 def remove_rep(current_rep: float,
                rep_points: float,
                debuf_effect: float) -> float:
+    """убрать рептацию."""
     current_rep -= rep_points
     if debuf_effect:
         return current_rep * ANTIBONUS
@@ -125,11 +142,13 @@ def remove_rep(current_rep: float,
 
 
 def main_1(duel_res: float) -> float:
+    """главный 1."""
     current_rep: float = 0.0
     for rep, result, effect in duel_res:
         if result == 'success':
             current_rep = add_rep(current_rep, rep, effect)
         if result == 'failure':
             current_rep = remove_rep(current_rep, rep, effect)
-    return (f'После {len(duel_res)} поединков, ',
+    len_duel_res = len(duel_res)
+    return (f'После {len_duel_res} поединков, ',
             f'репутация персонажа — {current_rep:.3f} очков.')
